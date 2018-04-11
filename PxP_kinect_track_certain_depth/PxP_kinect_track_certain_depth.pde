@@ -1,4 +1,4 @@
-// The world pixel by pixel 2016
+// The world pixel by pixel 2018
 // Daniel Rozin
 // track objects that are in a certain distance from the camera 
 // uses Kinect 2 and uses the  depth image -PXP methods in the bottom

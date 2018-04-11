@@ -1,4 +1,11 @@
 
+// The world pixel by pixel 2018
+// Daniel Rozin
+// green screen effect using distance to determine foregound and background
+// move mouse to set the threshold between forground and background
+// uses Kinect 2 and uses the depth image -PXP methods in the bottom
+
+
 import org.openkinect.freenect.*;
 import org.openkinect.processing.*;
 
@@ -6,8 +13,8 @@ Kinect2 kinect2;
 
 // Depth image
 PImage secondImage;
-int maxDistance = 860;
- int   minDistance= 100;
+
+int   minDistance= 100;
 
 int A, R, G, B;
 void setup() {
@@ -17,7 +24,7 @@ void setup() {
   kinect2.initDepth();
   kinect2.initVideo();
   kinect2.initRegistered();
-    kinect2.initDevice();
+  kinect2.initDevice();
   secondImage = loadImage("http://www.planetware.com/photos-large/USNY/new-york-niagara-falls-state-park.jpg");
   secondImage.resize(width, height);
   secondImage.loadPixels();
@@ -31,7 +38,7 @@ void draw() {
   PImage registeredImage= kinect2.getRegisteredImage();
   registeredImage.resize(width, height);
   registeredImage.loadPixels();
-  maxDistance= mouseX*10;
+  int maxDistance= mouseX*10;
 
   int[] rawDepth = kinect2.getRawDepth(); 
   for (int x=0; x < width; x++) {
@@ -41,13 +48,13 @@ void draw() {
         PxPGetPixel(x, y, registeredImage.pixels, width);
         PxPSetPixel(x, y, R, G, B, 255, pixels, width);
       } else {
-          PxPGetPixel(x, y, secondImage.pixels, width);
+        PxPGetPixel(x, y, secondImage.pixels, width);
         PxPSetPixel(x, y, R, G, B, 255, pixels, width);
       }
     }
   }
   updatePixels();
- // image(depthImage,0,0);
+  // image(depthImage,0,0);
 }
 
 

@@ -1,7 +1,8 @@
-// The world pixel by pixel 2016
+// The world pixel by pixel 2018
 // Daniel Rozin
 // a black and white banding effect
-// move mouse to set the threshold between forground and background
+// move mouseX to set the threshold between forground and background
+// move mouseY to set the width of the bands
 // uses Kinect 2 and uses the raw depth data -PXP methods in the bottom
 
 

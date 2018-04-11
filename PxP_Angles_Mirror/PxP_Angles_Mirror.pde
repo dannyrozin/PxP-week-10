@@ -1,7 +1,7 @@
 
-// The world pixel by pixel 2016
+// The world pixel by pixel 2018
 // Daniel Rozin
-// Angles Mirror a simulation of my mechanical piece of same name
+// Angles Mirror- a simulation of my mechanical piece of same name
 // move mouse to set the threshold between forground and background
 // uses Kinect 2 and uses the depth image -PXP methods in the bottom
 
@@ -28,19 +28,14 @@ void draw() {
   for (int x = 0; x<width; x+=15) {                           // skip every 15 pixels
     for (int y = 0; y<height; y+=15) {
       PxPGetPixel(x, y, depthImage.pixels, width);            // Get the RGB of each depth pixel as its gray the R,G,B are all the same
-      if (R>0 && R <depthThreshold) {                         // if the depth is more than the threshold (brighter is farther away)
-        pushMatrix();                                         // translate to the location of the x, y so we rotate around that point
-        translate(x, y);
-        rotate(radians(45));                                  // rotate 45 degrees
-        line(0, 0, 18, 0);
-        popMatrix();
-      } else {
-        pushMatrix();
-        translate(x, y);
-        rotate(radians(135));                                 // rotate 135 degrees
-        line(0, 0, 18, 0);
-        popMatrix();
-      }
+      int angle = 45;                                         
+      if (R>0 && R <depthThreshold) angle = 135;               // if the depth is more than the threshold (brighter is farther away)
+                                                                // rotate 135 degrees
+      pushMatrix();
+      translate(x, y);                                         
+      rotate(radians(angle));                                
+      line(0, 0, 18, 0);
+      popMatrix();
     }
   }
 }

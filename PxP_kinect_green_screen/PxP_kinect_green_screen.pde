@@ -1,5 +1,5 @@
 
-// The world pixel by pixel 2016
+// The world pixel by pixel 2018
 // Daniel Rozin
 // green screen effect using distance to determine foregound and background
 // move mouse to set the threshold between forground and background
@@ -12,7 +12,7 @@ import org.openkinect.processing.*;
 Kinect2 kinect2;
 
 PImage secondImage;                       // this will hold our background image
-int maxDistance = 860;
+
 
 int A, R, G, B;
 void setup() {
@@ -30,7 +30,7 @@ void draw() {
   loadPixels();
   PImage registeredImage= kinect2.getRegisteredImage();           // get the registered RGB image and place in a PIMage
   registeredImage.loadPixels();                                   // load the pixels of the registered image so we can access its pixels
-  maxDistance= mouseX*10;
+ int maxDistance= mouseX*10;
   int[] rawDepth = kinect2.getRawDepth();                         // get the raw depth data and place in an array of ints
   for (int x=0; x < width; x++) {
     for (int y=0; y < height; y++) {

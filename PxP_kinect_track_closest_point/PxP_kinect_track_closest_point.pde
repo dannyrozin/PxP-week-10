@@ -1,4 +1,4 @@
-// The world pixel by pixel 2016
+// The world pixel by pixel 2018
 // Daniel Rozin
 // track closest objects
 // uses Kinect 2 and uses the  depth image -PXP methods in the bottom
@@ -27,17 +27,18 @@ void draw() {
   int countGoodPixels=0;                            // this will count the pixels that qualify
   for (int x = 0; x<width; x++) {
     for (int y = 0; y<height; y++) {
-      PxPGetPixel(x, y, depthImage.pixels, width);          // Get the RGB of each pixel     
-      if (R== record && R >0) {                             // if our pixel is equal to the closest pixel we saw
-        sumX += x;                                          // add the x and y to the sum variables
-        sumY += y;
-        countGoodPixels++;                                  // count the pixels that qualify
-      }
+      PxPGetPixel(x, y, depthImage.pixels, width);          // Get the RGB of each pixel           
       if (R< record & R > 0) {                        // if our pixel is the closest we ever saw
         sumX=x;                                     // lets start summing again
         sumY=y;
         countGoodPixels=1;                            // reset the counter
         record= R;                                    // remember this value as the new record
+      }
+      
+      if (R== record && R >0) {                             // if our pixel is equal to the closest pixel we saw
+        sumX += x;                                          // add the x and y to the sum variables
+        sumY += y;
+        countGoodPixels++;                                  // count the pixels that qualify
       }
     }
   }
