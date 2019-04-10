@@ -1,5 +1,5 @@
 
-// The world pixel by pixel 2018
+// The world pixel by pixel 2019
 // Daniel Rozin
 // Angles Mirror- a simulation of my mechanical piece of same name
 // move mouse to set the threshold between forground and background

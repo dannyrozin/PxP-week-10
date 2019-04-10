@@ -1,4 +1,4 @@
-// The world pixel by pixel 2018
+// The world pixel by pixel 2019
 // Daniel Rozin
 // a black and white banding effect
 // move mouseX to set the threshold between forground and background
