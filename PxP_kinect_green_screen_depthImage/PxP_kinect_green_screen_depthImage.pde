@@ -31,6 +31,8 @@ void setup() {
   println(kinect2.depthWidth);
 }
 
+
+
 void draw() { 
   loadPixels();
   PImage videoImage= kinect2.getVideoImage();
@@ -38,23 +40,21 @@ void draw() {
   PImage registeredImage= kinect2.getRegisteredImage();
   registeredImage.resize(width, height);
   registeredImage.loadPixels();
-  int maxDistance= mouseX*10;
-
-  int[] rawDepth = kinect2.getRawDepth(); 
+  depthImage.loadPixels();
+  int maxDistance= mouseX;
   for (int x=0; x < width; x++) {
     for (int y=0; y < height; y++) {
-      int thisDepth= x+y*width;
-      if (rawDepth[thisDepth] < maxDistance && rawDepth[thisDepth]  > minDistance) {
-        PxPGetPixel(x, y, registeredImage.pixels, width);
-        PxPSetPixel(x, y, R, G, B, 255, pixels, width);
+       PxPGetPixel(x, y, depthImage.pixels, width);                    // get the pixel values from the depth image
+      if (R < maxDistance && R  > 0) {                                  // its gray so R the same as G and B
+        PxPGetPixel(x, y, registeredImage.pixels, width);                // if the depth is less than our threshold
+        PxPSetPixel(x, y, R, G, B, 255, pixels, width);                  // then we set the RGB from the kinect RGB camera
       } else {
-        PxPGetPixel(x, y, secondImage.pixels, width);
+        PxPGetPixel(x, y, secondImage.pixels, width);                  // otherwise we get a pixel from our image
         PxPSetPixel(x, y, R, G, B, 255, pixels, width);
       }
     }
   }
   updatePixels();
-  // image(depthImage,0,0);
 }
 
 
