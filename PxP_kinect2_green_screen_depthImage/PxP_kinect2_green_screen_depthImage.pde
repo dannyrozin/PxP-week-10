@@ -1,9 +1,9 @@
 
-// The world pixel by pixel 2019
+// The world pixel by pixel 2020
 // Daniel Rozin
 // green screen effect using distance to determine foregound and background
 // move mouse to set the threshold between forground and background
-// uses Kinect 2 and uses the raw depth data -PXP methods in the bottom
+// uses Kinect 2 and uses the depth image -PXP methods in the bottom
 
 
 import org.openkinect.freenect.*;
@@ -11,35 +11,45 @@ import org.openkinect.processing.*;
 
 Kinect2 kinect2;
 
-PImage secondImage;                       // this will hold our background image
+// Depth image
+PImage secondImage;
 
+int   minDistance= 100;
 
 int A, R, G, B;
 void setup() {
-  size(512, 424);                          // this is the size of the Kinect2 depth data (RGB is bigger)
-  kinect2 = new Kinect2(this);            // using kinect 2 
-  kinect2.initDepth();                    // we will be using the depth
-  kinect2.initRegistered();              // we want the RGB image to be alligned to the depth 
+  size(512, 424);
+
+  kinect2 = new Kinect2(this);
+  kinect2.initDepth();
+  kinect2.initVideo();
+  kinect2.initRegistered();
   kinect2.initDevice();
   secondImage = loadImage("http://www.planetware.com/photos-large/USNY/new-york-niagara-falls-state-park.jpg");
   secondImage.resize(width, height);
   secondImage.loadPixels();
+  println(kinect2.depthWidth);
 }
+
+
 
 void draw() { 
   loadPixels();
-  PImage registeredImage= kinect2.getRegisteredImage();           // get the registered RGB image and place in a PIMage
-  registeredImage.loadPixels();                                   // load the pixels of the registered image so we can access its pixels
- int maxDistance= mouseX*10;
-  int[] rawDepth = kinect2.getRawDepth();                         // get the raw depth data and place in an array of ints
+  PImage videoImage= kinect2.getVideoImage();
+  PImage depthImage = kinect2.getDepthImage();
+  PImage registeredImage= kinect2.getRegisteredImage();
+  registeredImage.resize(width, height);
+  registeredImage.loadPixels();
+  depthImage.loadPixels();
+  int maxDistance= mouseX;
   for (int x=0; x < width; x++) {
     for (int y=0; y < height; y++) {
-      int thisDepth= x+y*width;                                   // calculate where our pixel lives in the depth int array
-      if (rawDepth[thisDepth] < maxDistance && rawDepth[thisDepth]  > 0) {        //check if we are closer than the theshold but not 0
-        PxPGetPixel(x, y, registeredImage.pixels, width);                         // if we are closer then copy the pixel from the RGB image to the screen
-        PxPSetPixel(x, y, R, G, B, 255, pixels, width);
+       PxPGetPixel(x, y, depthImage.pixels, width);                    // get the pixel values from the depth image
+      if (R < maxDistance && R  > 0) {                                  // its gray so R the same as G and B
+        PxPGetPixel(x, y, registeredImage.pixels, width);                // if the depth is less than our threshold
+        PxPSetPixel(x, y, R, G, B, 255, pixels, width);                  // then we set the RGB from the kinect RGB camera
       } else {
-        PxPGetPixel(x, y, secondImage.pixels, width);                             // if we are further away than threshold then copy the pixel from the second image
+        PxPGetPixel(x, y, secondImage.pixels, width);                  // otherwise we get a pixel from our image
         PxPSetPixel(x, y, R, G, B, 255, pixels, width);
       }
     }

@@ -9,19 +9,20 @@
 import org.openkinect.freenect.*;
 import org.openkinect.processing.*;
 
-Kinect kinect;
+Kinect2 kinect2;
 
 int A, R, G, B;
-void setup() {                                          // this is the size of the Kinect depth data (RGB is bigger)
-  size(640, 480);
-  kinect = new Kinect(this);                           // using kinect 2 
-  kinect.initDepth();                                    // we will be using the depth
+void setup() {                                          // this is the size of the Kinect2 depth data (RGB is bigger)
+  size(512, 424);
+  kinect2 = new Kinect2(this);                           // using kinect 2 
+  kinect2.initDepth();                                    // we will be using the depth
+  kinect2.initDevice();
 }
 
 void draw() { 
   background(255);
   int depthThreshold = mouseX*10;
-  int[] rawDepth = kinect.getRawDepth();                    // get the raw depth data and place in an array of ints
+  int[] rawDepth = kinect2.getRawDepth();                    // get the raw depth data and place in an array of ints
   loadPixels();
   for (int x = 0; x<width; x++) {
     for (int y = 0; y<height; y++) {

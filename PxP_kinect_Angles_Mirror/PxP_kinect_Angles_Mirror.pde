@@ -1,21 +1,20 @@
 
-// The world pixel by pixel 2019
+// The world pixel by pixel 2020
 // Daniel Rozin
 // Angles Mirror- a simulation of my mechanical piece of same name
 // move mouse to set the threshold between forground and background
-// uses Kinect 2 and uses the depth image -PXP methods in the bottom
+// uses Kinect and uses the depth image -PXP methods in the bottom
 
 
 import org.openkinect.freenect.*;
 import org.openkinect.processing.*;
 
-Kinect2 kinect2;
+Kinect kinect;
 int A, R, G, B;
 void setup() {
-  size(512, 424);                             // this is the size of the Kinect2 depth data (RGB is bigger)
-  kinect2 = new Kinect2(this);
-  kinect2.initDepth();                        // we will be using only the depth data
-  kinect2.initDevice();                       // start the kinect
+  size(640, 480);                             // this is the size of the Kinect depth data (RGB is bigger)
+  kinect = new Kinect(this);
+  kinect.initDepth();                        // we will be using only the depth data
 }
 
 void draw() { 
@@ -23,13 +22,13 @@ void draw() {
   stroke(255, 255, 0);
   strokeWeight(2);
   int depthThreshold = mouseX;
-  PImage depthImage = kinect2.getDepthImage();                // we will be using the depth image not the raw depth
+  PImage depthImage = kinect.getDepthImage();                // we will be using the depth image not the raw depth
   depthImage.loadPixels();                                    // it lives in a PImage so we need to load the pixels                                
   for (int x = 0; x<width; x+=15) {                           // skip every 15 pixels
     for (int y = 0; y<height; y+=15) {
       PxPGetPixel(x, y, depthImage.pixels, width);            // Get the RGB of each depth pixel as its gray the R,G,B are all the same
       int angle = 45;                                         
-      if (R>0 && R <depthThreshold) angle = 135;               // if the depth is more than the threshold (brighter is farther away)
+      if (R>0 && R >depthThreshold) angle = 135;               // if the depth is more than the threshold (brighter is farther away)
                                                                 // rotate 135 degrees
       pushMatrix();
       translate(x, y);                                         

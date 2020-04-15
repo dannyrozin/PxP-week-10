@@ -1,34 +1,34 @@
 // The world pixel by pixel 2020
 // Daniel Rozin
 // track closest objects
-// uses Kinect and uses the  depth image -PXP methods in the bottom
+// uses Kinect 2 and uses the  depth image -PXP methods in the bottom
 // this is the simplest code, see Dan Shiffman's example AveragePointTracking2 for a much better tracking example
 
 import org.openkinect.freenect.*;
 import org.openkinect.processing.*;
 
-Kinect kinect;
+Kinect2 kinect2;
 
 int A, R, G, B;
 void setup() {
-  size(640, 480);
-  kinect = new Kinect(this);            // We are only using the depth info, no video
-  kinect.initDepth();
-  //kinect.initDevice();
+  size(512, 424);
+  kinect2 = new Kinect2(this);            // We are only using the depth info, no video
+  kinect2.initDepth();
+  kinect2.initDevice();
   fill(255,255,0);
 }
 
 void draw() { 
-  PImage depthImage = kinect.getDepthImage();          // get the depth info i the form of a PImage
+  PImage depthImage = kinect2.getDepthImage();          // get the depth info i the form of a PImage
   image(depthImage, 0, 0);                              // draw the depth image to the screen
   depthImage.loadPixels();
   int sumX=0, sumY=0;                              //these wil sum the location of the pixels that qualify 
-  int record = 1;
+  int record = 255;
   int countGoodPixels=0;                            // this will count the pixels that qualify
   for (int x = 0; x<width; x++) {
     for (int y = 0; y<height; y++) {
       PxPGetPixel(x, y, depthImage.pixels, width);          // Get the RGB of each pixel           
-      if (R> record & R > 0) {                        // if our pixel is the closest we ever saw
+      if (R< record & R > 0) {                        // if our pixel is the closest we ever saw
         sumX=x;                                     // lets start summing again
         sumY=y;
         countGoodPixels=1;                            // reset the counter
