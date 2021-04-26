@@ -1,4 +1,4 @@
-// The world pixel by pixel 2020
+// The world pixel by pixel 2021
 // Daniel Rozin
 // track closest objects
 // uses Kinect and uses the  depth image -PXP methods in the bottom
