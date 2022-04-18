@@ -1,4 +1,4 @@
-// The world pixel by pixel 2021
+// The world pixel by pixel 2022
 // Daniel Rozin
 // track closest objects
 // uses Kinect 2 and uses the  depth image -PXP methods in the bottom
