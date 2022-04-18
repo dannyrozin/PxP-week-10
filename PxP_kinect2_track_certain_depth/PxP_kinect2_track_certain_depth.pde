@@ -7,19 +7,22 @@
 import org.openkinect.freenect.*;
 import org.openkinect.processing.*;
 
-Kinect kinect;
+Kinect2 kinect2;
 
 int depthToTrack = 150;
 int A, R, G, B;
 void setup() {
-  size(640, 480);
-  kinect = new Kinect(this);            // We are only using the depth info, no video
-  kinect.initDepth();
+  size(512, 424);
+  kinect2 = new Kinect2(this);            // We are only using the depth info, no video
+  kinect2.initDepth();
+    kinect2.initDevice(); 
   fill(255,255,0);
 }
 
 void draw() { 
-  PImage depthImage = kinect.getDepthImage();          // get the depth info i the form of a PImage
+  depthToTrack= mouseX;
+  println("tracking depth: "+depthToTrack); 
+  PImage depthImage = kinect2.getDepthImage();          // get the depth info i the form of a PImage
   image(depthImage, 0, 0);                              // draw the depth image to the screen
   depthImage.loadPixels();
   int sumX=0, sumY=0;                              //these wil sum the location of the pixels that qualify 

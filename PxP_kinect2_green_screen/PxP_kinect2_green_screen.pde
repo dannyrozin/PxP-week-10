@@ -1,5 +1,5 @@
 
-// The world pixel by pixel 2021
+// The world pixel by pixel 2022
 // Daniel Rozin
 // green screen effect using distance to determine foregound and background
 // move mouse to set the threshold between forground and background
